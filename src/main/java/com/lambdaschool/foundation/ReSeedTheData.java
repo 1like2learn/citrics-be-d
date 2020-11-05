@@ -15,6 +15,8 @@ import javax.transaction.Transactional;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Transactional
 @Component
@@ -158,16 +160,20 @@ public class ReSeedTheData implements CommandLineRunner {
             for(var zip : seeder.getZipcodes())
             {
                 String code = zip.getCode();
-
-                var z = new Zipcode();
-                z.setCity(newCity);
-                z.setCode(code);
-                newCity.getZipcodes().add(z);
+                Pattern p = Pattern.compile("(\\d{1,5}\\D?\\d{1,5})");
+                Matcher m = p.matcher(code);
+                if(m.find())
+                {
+                    var z = new Zipcode();
+                    z.setCity(newCity);
+                    z.setCode(m.group());
+                    newCity.getZipcodes().add(z);
+                }
             }
             cityService.save(newCity);
 
             count++;
-            if(count > 15)
+            if(count > 30)
             {
                 return;
             }
