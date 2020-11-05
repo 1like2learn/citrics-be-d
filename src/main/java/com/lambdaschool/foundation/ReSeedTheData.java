@@ -43,21 +43,6 @@ public class ReSeedTheData implements CommandLineRunner {
     @Autowired
     CountyService countyService;
 
-    public class DataSeederListClass {
-        private List<DataSeeder> cities = new ArrayList<>();
-
-        public DataSeederListClass() {
-        }
-
-        public List<DataSeeder> getCities() {
-            return cities;
-        }
-
-        public void setCities(List<DataSeeder> cities) {
-            this.cities = cities;
-        }
-    }
-
     @Override
     public void run(String... args) throws Exception {
         URL baseUrl = new URL("https://labs27-c-citrics-api.herokuapp.com/cities/allid");
@@ -77,7 +62,6 @@ public class ReSeedTheData implements CommandLineRunner {
 
             ObjectMapper getMapper = new ObjectMapper();
             var seeder = getMapper.readValue(getStream, DataSeeder.class);
-            System.out.println(String.format("Finished %d", count));
 
             City newCity = new City();
 
@@ -104,12 +88,14 @@ public class ReSeedTheData implements CommandLineRunner {
             newCity.setWikiimgurl(seeder.getWikiimgurl());
             newCity.setGnis(seeder.getGnis());
             newCity = cityService.save(newCity);
+            List<String> countyNames = new ArrayList<>();
             for(var county : seeder.getCounties())
             {
                 var c = new County();
                 c.setCity(newCity);
                 c.setName(county.getName());
                 newCity.getCounties().add(c);
+                countyNames.add(c.getName());
             }
             for(var covid : seeder.getCovid())
             {
@@ -171,7 +157,7 @@ public class ReSeedTheData implements CommandLineRunner {
                 }
             }
             cityService.save(newCity);
-
+            System.out.println(String.format("Finished %d", count));
             count++;
             if(count > 30)
             {
