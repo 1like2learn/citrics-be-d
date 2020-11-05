@@ -154,14 +154,17 @@ public class ReSeedTheData implements CommandLineRunner {
                 pHis.setYear(pop.getYear());
                 newCity.getPopulationhist().add(pHis);
             }
+            // TODO: use regular expressions to "clean" the zip codes coming from the old database
             for(var zip : seeder.getZipcodes())
             {
+                String code = zip.getCode();
+
                 var z = new Zipcode();
                 z.setCity(newCity);
-                z.setCode(zip.getCode());
+                z.setCode(code);
                 newCity.getZipcodes().add(z);
             }
-            newCity = cityService.save(newCity);
+            cityService.save(newCity);
 
             count++;
             if(count > 15)
