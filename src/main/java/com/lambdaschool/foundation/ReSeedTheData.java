@@ -2,7 +2,10 @@ package com.lambdaschool.foundation;
 
 import com.lambdaschool.foundation.dtos.CityInfo;
 import com.lambdaschool.foundation.dtos.DataSeeder;
+import com.lambdaschool.foundation.models.*;
+import com.lambdaschool.foundation.services.*;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configurers.UrlAuthorizationConfigurer;
@@ -16,6 +19,27 @@ import java.util.*;
 @Transactional
 @Component
 public class ReSeedTheData implements CommandLineRunner {
+
+    @Autowired
+    CityService cityService;
+
+    @Autowired
+    ZipcodeService zipcodeService;
+
+    @Autowired
+    HistoricalCovidService historicalCovidService;
+
+    @Autowired
+    HistoricalHousingService historicalHousingService;
+
+    @Autowired
+    HistoricalIncomeService historicalIncomeService;
+
+    @Autowired
+    HistoricalWeatherService historicalWeatherService;
+
+    @Autowired
+    CountyService countyService;
 
     public class DataSeederListClass {
         private List<DataSeeder> cities = new ArrayList<>();
@@ -51,8 +75,99 @@ public class ReSeedTheData implements CommandLineRunner {
 
             ObjectMapper getMapper = new ObjectMapper();
             var seeder = getMapper.readValue(getStream, DataSeeder.class);
-            System.out.println(String.format("Finsihed %d", count));
+            System.out.println(String.format("Finished %d", count));
+
+            City newCity = new City();
+
+            newCity.setAverageage(seeder.getAverageage());
+            newCity.setAveragehouse(seeder.getAveragehouse());
+            newCity.setAverageperc(seeder.getAverageperc());
+            newCity.setAveragetemp(seeder.getAveragetemp());
+            newCity.setAvgnewcovidcases(seeder.getAvgnewcovidcases());
+            newCity.setCitynamestate(seeder.getCitynamestate());
+            newCity.setCostoflivingindex(seeder.getCostoflivingindex());
+            newCity.setDensitykmsq(seeder.getDensitykmsq());
+            newCity.setDensitymisq(seeder.getDensitymisq());
+            newCity.setHouseholdincome(seeder.getHouseholdincome());
+            newCity.setIndividualincome(seeder.getIndividualincome());
+            newCity.setLatitude(seeder.getLatitude());
+            newCity.setLogitude(seeder.getLogitude());
+            newCity.setPopulation(seeder.getPopulation());
+            newCity.setRent(seeder.getRent());
+            newCity.setAcastatus(seeder.getAcastatus());
+            newCity.setFpis(seeder.getFpis());
+            newCity.setStatecode(seeder.getStatecode());
+            newCity.setTimezone(seeder.getTimezone());
+            newCity.setWebsite(seeder.getWebsite());
+            newCity.setWikiimgurl(seeder.getWikiimgurl());
+            newCity.setGnis(seeder.getGnis());
+            newCity = cityService.save(newCity);
+            for(var county : seeder.getCounties())
+            {
+                var c = new County();
+                c.setCity(newCity);
+                c.setName(county.getName());
+                newCity.getCounties().add(c);
+            }
+            for(var covid : seeder.getCovid())
+            {
+                var vid = new HistoricalCovid();
+                vid.setCases(covid.getCases());
+                vid.setCity(newCity);
+                vid.setDay(covid.getDay());
+                vid.setMonth(covid.getMonth());
+                vid.setYear(covid.getYear());
+                newCity.getCovid().add(vid);
+            }
+            for(var house : seeder.getHistoricalaveragehouse())
+            {
+                var avgHouse = new HistoricalHousing();
+                avgHouse.setCity(newCity);
+                avgHouse.setHousingcost(house.getHousingcost());
+                avgHouse.setMonth(house.getMonth());
+                avgHouse.setYear(house.getYear());
+                newCity.getHistoricalaveragehouse().add(avgHouse);
+            }
+            for(var income : seeder.getHistoricalincome())
+            {
+                var i = new HistoricalIncome();
+                i.setCity(newCity);
+                i.setHouseholdincome(income.getHouseholdincome());
+                i.setIndividualincome(income.getIndividualincome());
+                i.setYear(income.getYear());
+                newCity.getHistoricalincome().add(i);
+            }
+            for(var weather : seeder.getHistoricalweather())
+            {
+                var w = new HistoricalWeather();
+                w.setCity(newCity);
+                w.setMonth(weather.getMonth());
+                w.setPrecipitation(weather.getPrecipitation());
+                w.setTemperature(weather.getTemperature());
+                newCity.getHistoricalweather().add(w);
+            }
+            for(var pop : seeder.getPopulationhist())
+            {
+                var pHis = new PopulationHist();
+                pHis.setCity(newCity);
+                pHis.setPop(pop.getPop());
+                pHis.setYear(pop.getYear());
+                newCity.getPopulationhist().add(pHis);
+            }
+            for(var zip : seeder.getZipcodes())
+            {
+                var z = new Zipcode();
+                z.setCity(newCity);
+                z.setCode(zip.getCode());
+                newCity.getZipcodes().add(z);
+            }
+            newCity = cityService.save(newCity);
+
             count++;
+            if(count > 15)
+            {
+                return;
+            }
         }
     }
 }
