@@ -1,6 +1,7 @@
 package com.lambdaschool.foundation.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lambdaschool.foundation.dtos.CityUpdater;
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.models.*;
 import com.lambdaschool.foundation.repository.*;
@@ -779,5 +780,15 @@ public class CityServiceImpl implements CityService
 
         user.getFavcities().add(us);
         c.getUsers().add(us);
+    }
+
+    @Override
+    public City update(City city) {
+        return null;
+    }
+
+    @Override
+    public City update(CityUpdater city) {
+        return null;
     }
 }

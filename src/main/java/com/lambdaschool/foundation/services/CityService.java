@@ -1,5 +1,6 @@
 package com.lambdaschool.foundation.services;
 
+import com.lambdaschool.foundation.dtos.CityUpdater;
 import com.lambdaschool.foundation.models.City;
 import com.lambdaschool.foundation.models.CityIdName;
 import com.lambdaschool.foundation.models.DSCity;
@@ -67,4 +68,8 @@ public interface CityService
      * @param user user extracted by controller
      */
     void saveFavCity(long id, User user);
+
+    City update(City city);
+
+    City update(CityUpdater city);
 }

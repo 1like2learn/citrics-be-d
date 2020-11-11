@@ -7,19 +7,19 @@ import org.springframework.http.HttpMethod;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-public class MultiSeedRunner implements Runnable {
+public class ThreadedDownload implements Runnable
+{
 
     private Thread t;
     private static int count = 0;
     private int threadId;
     private static int iterations = 0;
 
-
-    public MultiSeedRunner()
+    public ThreadedDownload()
     {
         count++;
         threadId = count;
-        System.out.println(String.format("Spawning thread. Count: %d", count));
+        System.out.println(String.format("Spawning download thread. Count: %d", count));
     }
 
     @Override
@@ -67,7 +67,8 @@ public class MultiSeedRunner implements Runnable {
         }
     }
 
-    public Thread getThread() {
+    public Thread getThread()
+    {
         return t;
     }
 }
