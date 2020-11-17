@@ -18,7 +18,7 @@ public class DataSourceConfig
     /**
      * The property from application properties. Defaults to H2
      */
-    @Value("${local.run.db:h2}")
+    @Value("${local.run.db}")
     private String dbValue;
 
     /**
@@ -26,6 +26,9 @@ public class DataSourceConfig
      */
     @Value("${spring.datasource.url:}")
     private String dbURL;
+
+    @Value("${local.testing:false}")
+    private boolean testing;
 
     /**
      * The actual datasource configuration
@@ -35,6 +38,15 @@ public class DataSourceConfig
     @Bean
     public DataSource dataSource()
     {
+        if(testing)
+        {
+            var source = DataSourceBuilder.create();
+            source.driverClassName("org.postgresql.Driver");
+            source.url(dbURL);
+            source.username("postgres");
+            source.password("password");
+            return source.build();
+        }
         if (dbValue.equalsIgnoreCase("POSTGRESQL"))
         {
             // Assume Heroku

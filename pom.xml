@@ -144,6 +144,8 @@
             <version>20200518</version>
         </dependency>
 
+
+
     </dependencies>
 
     <build>
@@ -169,6 +171,23 @@
                     <processTypes>
                         <web>java $JAVA_OPTS -Dserver.port=$PORT -jar target/${project.build.finalName}.jar</web>
                     </processTypes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.11</version>
+                <!-- configuration and executions -->
+                <configuration>
+                    <complianceLevel>1.8</complianceLevel>
+                    <Xlint>ignore</Xlint>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
                 </configuration>
             </plugin>
 

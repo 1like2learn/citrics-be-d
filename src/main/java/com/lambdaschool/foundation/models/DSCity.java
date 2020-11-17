@@ -2,8 +2,6 @@ package com.lambdaschool.foundation.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import org.codehaus.jackson.JsonNode;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DSCity {
