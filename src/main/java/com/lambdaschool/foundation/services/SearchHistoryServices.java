@@ -10,7 +10,6 @@ public interface SearchHistoryServices {
     SearchHistory findById(long id);
 
     SearchHistory save(SearchHistory searchHistory);
-    SearchHistory update(SearchHistory searchHistory);
 
     void delete(long id);
     void delete(SearchHistory searchHistory);

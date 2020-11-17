@@ -90,4 +90,9 @@ public class HelperFunctionsImpl
         }
     }
 
+    @Override
+    public String getCurrentUsername() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
 }
