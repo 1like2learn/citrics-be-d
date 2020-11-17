@@ -1,10 +1,6 @@
 package com.lambdaschool.foundation;
 
 import com.lambdaschool.foundation.models.*;
-import com.lambdaschool.foundation.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;

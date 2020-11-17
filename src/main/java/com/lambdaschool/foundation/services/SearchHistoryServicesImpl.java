@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SearchHistoryServicesImpl implements SearchHistoryServices
     public List<SearchHistory> findUserHistory()
     {
         String username = helperFunctions.getCurrentUsername();
-        if(username == null || username.equalsIgnoreCase("anonymous"))
+        if(username == null || username.equalsIgnoreCase("anonymousUser"))
         {
             throw new EntityNotFoundException(String.format("User is not authenticated"));
         }
@@ -50,6 +51,7 @@ public class SearchHistoryServicesImpl implements SearchHistoryServices
         return historyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Id %d not found", id)));
     }
 
+    @Transactional
     @Override
     public SearchHistory save(SearchHistory searchHistory)
     {
@@ -79,13 +81,34 @@ public class SearchHistoryServicesImpl implements SearchHistoryServices
     @Override
     public void delete(long id)
     {
-        historyRepository.deleteById(id);
+        var history = findById(id);
+        if(helperFunctions.isAuthorizedToMakeChange(history.getUser().getUsername()))
+        {
+            historyRepository.deleteById(id);
+        }
     }
 
     @Override
     public void delete(SearchHistory searchHistory)
     {
         var history = findById(searchHistory.getId());
-        historyRepository.deleteById(history.getId());
+        if(helperFunctions.isAuthorizedToMakeChange(searchHistory.getUser().getUsername()))
+        {
+            historyRepository.deleteById(history.getId());
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllUsersHistory()
+    {
+        var history = findUserHistory();
+        for(var hist : history)
+        {
+            if(helperFunctions.isAuthorizedToMakeChange(hist.getUser().getUsername()))
+            {
+                delete(hist.getId());
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ public interface SearchHistoryServices {
 
     SearchHistory save(SearchHistory searchHistory);
 
+    void deleteAllUsersHistory();
     void delete(long id);
     void delete(SearchHistory searchHistory);
 }

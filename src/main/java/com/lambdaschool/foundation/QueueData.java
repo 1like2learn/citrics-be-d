@@ -2,8 +2,6 @@ package com.lambdaschool.foundation;
 
 import com.lambdaschool.foundation.dtos.DataSeeder;
 import com.lambdaschool.foundation.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ArrayDeque;

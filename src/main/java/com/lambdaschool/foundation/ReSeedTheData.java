@@ -1,20 +1,15 @@
 package com.lambdaschool.foundation;
 
 import com.lambdaschool.foundation.dtos.CityInfo;
-import com.lambdaschool.foundation.models.*;
 import com.lambdaschool.foundation.services.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Transactional
 //@Component

@@ -9,24 +9,24 @@ import javax.persistence.*;
 public class SearchHistory extends Auditable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "userid")
     @JsonIgnoreProperties
     private User user;
 
-    private double populationMin;
-    private double populationMax;
-    private double salaryMin;
-    private double salaryMax;
-    private double rentMin;
-    private double rentMax;
-    private double avgTempMin;
-    private double avgTempMax;
-    private double walkabilityMin;
-    private double walkabilityMax;
+    private Double populationMin;
+    private Double populationMax;
+    private Double salaryMin;
+    private Double salaryMax;
+    private Double rentMin;
+    private Double rentMax;
+    private Double avgTempMin;
+    private Double avgTempMax;
+    private Double walkabilityMin;
+    private Double walkabilityMax;
 
     public SearchHistory(User user, double populationMin, double populationMax, double salaryMin, double salaryMax, double rentMin, double rentMax, double avgTempMin, double avgTempMax, double walkabilityMin, double walkabilityMax)
     {
