@@ -1,8 +1,9 @@
 package com.lambdaschool.foundation.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "searchhistory")
@@ -10,11 +11,12 @@ public class SearchHistory extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private long id;
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties
+    @JsonIgnore
     private User user;
 
     private Double populationMin;
@@ -62,83 +64,87 @@ public class SearchHistory extends Auditable
         this.user = user;
     }
 
-    public double getPopulationMin() {
+    public Double getPopulationMin() {
         return populationMin;
     }
 
-    public void setPopulationMin(double populationMin) {
+    public void setPopulationMin(Double populationMin) {
         this.populationMin = populationMin;
     }
 
-    public double getPopulationMax() {
+    public Double getPopulationMax() {
         return populationMax;
     }
 
-    public void setPopulationMax(double populationMax) {
+    public void setPopulationMax(Double populationMax) {
         this.populationMax = populationMax;
     }
 
-    public double getSalaryMin() {
+    public Double getSalaryMin() {
         return salaryMin;
     }
 
-    public void setSalaryMin(double salaryMin) {
+    public void setSalaryMin(Double salaryMin) {
         this.salaryMin = salaryMin;
     }
 
-    public double getSalaryMax() {
+    public Double getSalaryMax() {
         return salaryMax;
     }
 
-    public void setSalaryMax(double salaryMax) {
+    public void setSalaryMax(Double salaryMax) {
         this.salaryMax = salaryMax;
     }
 
-    public double getRentMin() {
+    public Double getRentMin() {
         return rentMin;
     }
 
-    public void setRentMin(double rentMin) {
+    public void setRentMin(Double rentMin) {
         this.rentMin = rentMin;
     }
 
-    public double getRentMax() {
+    public Double getRentMax() {
         return rentMax;
     }
 
-    public void setRentMax(double rentMax) {
+    public void setRentMax(Double rentMax) {
         this.rentMax = rentMax;
     }
 
-    public double getAvgTempMin() {
+    public Double getAvgTempMin() {
         return avgTempMin;
     }
 
-    public void setAvgTempMin(double avgTempMin) {
+    public void setAvgTempMin(Double avgTempMin) {
         this.avgTempMin = avgTempMin;
     }
 
-    public double getAvgTempMax() {
+    public Double getAvgTempMax() {
         return avgTempMax;
     }
 
-    public void setAvgTempMax(double avgTempMax) {
+    public void setAvgTempMax(Double avgTempMax) {
         this.avgTempMax = avgTempMax;
     }
 
-    public double getWalkabilityMin() {
+    public Double getWalkabilityMin() {
         return walkabilityMin;
     }
 
-    public void setWalkabilityMin(double walkabilityMin) {
+    public void setWalkabilityMin(Double walkabilityMin) {
         this.walkabilityMin = walkabilityMin;
     }
 
-    public double getWalkabilityMax() {
+    public Double getWalkabilityMax() {
         return walkabilityMax;
     }
 
-    public void setWalkabilityMax(double walkabilityMax) {
+    public void setWalkabilityMax(Double walkabilityMax) {
         this.walkabilityMax = walkabilityMax;
+    }
+
+    public Date getCreatedDate() {
+        return this.createdDate;
     }
 }

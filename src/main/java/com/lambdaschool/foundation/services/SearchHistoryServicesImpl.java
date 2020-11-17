@@ -57,6 +57,7 @@ public class SearchHistoryServicesImpl implements SearchHistoryServices
     {
         var histToSave = new SearchHistory();
 
+//        if(searchHistory.getAvgTempMax() != null)
         histToSave.setAvgTempMax(searchHistory.getAvgTempMax());
         histToSave.setAvgTempMin(searchHistory.getAvgTempMin());
         histToSave.setPopulationMax(searchHistory.getPopulationMax());
