@@ -47,6 +47,8 @@ public class ReSeedTheData implements CommandLineRunner {
         QueueData.historicalWeatherService = this.historicalWeatherService;
         QueueData.countyService = this.countyService;
 
+        // !! In order to re-seed a new database at a later time, you must change this url to the CURRENTLY DEPLOYED
+        // !! url of the previous backend. 
         URL baseUrl = new URL("https://labs27-c-citrics-api.herokuapp.com/cities/allid");
         var connection = (HttpURLConnection) baseUrl.openConnection();
         connection.setRequestMethod(HttpMethod.GET.name());
