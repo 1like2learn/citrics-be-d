@@ -2,13 +2,23 @@ package com.lambdaschool.foundation.dtos;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public class CityInfo{
+public class CityInfo
+{
     @JsonValue
-    private int cityid;
+    private long cityid;
     @JsonValue
     private String citynamestate;
 
-    public int getCityid() {
+    public CityInfo(int cityid, String citynamestate)
+    {
+        this.cityid = cityid;
+        this.citynamestate = citynamestate;
+    }
+
+    public CityInfo() {
+    }
+
+    public long getCityid() {
         return cityid;
     }
 
