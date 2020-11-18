@@ -40,7 +40,7 @@ public interface CityRepository extends CrudRepository<City, Long>
     /* ADVANCED SEARCH QUERY */
 
     @Query(nativeQuery = true, value = "SELECT cityid, citynamestate " +
-                                        "FROM cities\n" +
+                                        "FROM cities " +
                                         "WHERE population >= :populationMin AND population <= :populationMax " +
                                         "AND individualincome >= :salaryMin AND individualincome <= :salaryMax " +
                                         "AND rent >= :rentMin AND rent <= :rentMax " +
