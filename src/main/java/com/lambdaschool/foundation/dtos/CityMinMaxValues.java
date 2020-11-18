@@ -73,4 +73,18 @@ public class CityMinMaxValues {
     public void setAvgTempMax(Double avgTempMax) {
         this.avgTempMax = avgTempMax;
     }
+
+    @Override
+    public String toString() {
+        return "CityMinMaxValues{" +
+                "populationMin=" + populationMin +
+                ", populationMax=" + populationMax +
+                ", salaryMin=" + salaryMin +
+                ", salaryMax=" + salaryMax +
+                ", rentMin=" + rentMin +
+                ", rentMax=" + rentMax +
+                ", avgTempMin=" + avgTempMin +
+                ", avgTempMax=" + avgTempMax +
+                '}';
+    }
 }

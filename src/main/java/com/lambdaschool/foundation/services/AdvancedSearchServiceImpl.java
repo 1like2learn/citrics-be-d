@@ -70,25 +70,28 @@ public class AdvancedSearchServiceImpl implements AdvancedSearchService
     @Override
     public List<CityInfoInterface> advancedSearch(CityMinMaxValues searchParams) {
         var minMaxValues = getMinMax();
-        if (searchParams.getRentMax() == null) {
+        if (searchParams.getRentMax() == null || searchParams.getRentMin() == null) {
             searchParams.setRentMin(minMaxValues.getRentMin());
-            searchParams.setRentMin(minMaxValues.getRentMax());
+            searchParams.setRentMax(minMaxValues.getRentMax());
         }
-        if (searchParams.getSalaryMax() == null)
+        if (searchParams.getSalaryMax() == null || searchParams.getSalaryMin() == null)
         {
             searchParams.setSalaryMin(minMaxValues.getSalaryMin());
             searchParams.setSalaryMax(minMaxValues.getSalaryMax());
         }
-        if (searchParams.getAvgTempMax() == null)
+        if (searchParams.getAvgTempMax() == null || searchParams.getAvgTempMin() == null)
         {
             searchParams.setAvgTempMin(minMaxValues.getAvgTempMin());
             searchParams.setAvgTempMax(minMaxValues.getAvgTempMax());
         }
-        if (searchParams.getPopulationMax() == null)
+        if (searchParams.getPopulationMax() == null || searchParams.getPopulationMin() == null)
         {
             searchParams.setPopulationMax(minMaxValues.getPopulationMax());
             searchParams.setPopulationMin(minMaxValues.getPopulationMin());
         }
+
+        // For debugging
+//        System.out.println(searchParams);
 
         var result = cityRepository.advancedSearch(searchParams.getPopulationMin(),
                 searchParams.getPopulationMax(),
